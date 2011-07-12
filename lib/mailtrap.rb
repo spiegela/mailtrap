@@ -37,6 +37,9 @@ class Mailtrap
   # Service one or more SMTP client connections
   def accept( service )
     while session = service.accept
+      File.open( @msgfile, "a" ) do |file|
+        file.puts "\n* Received connection from #{session.from}\n"
+      end
       
       class << session
         def get_line
